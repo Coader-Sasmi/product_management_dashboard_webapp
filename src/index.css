@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +14,48 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* Optional: Add to src/index.css for custom SweetAlert2 styling */
+
+/* Dark mode support for SweetAlert2 */
+.dark .swal2-popup {
+  background-color: #1f2937 !important;
+  color: #f9fafb !important;
+}
+
+.dark .swal2-title {
+  color: #f9fafb !important;
+}
+
+.dark .swal2-html-container {
+  color: #d1d5db !important;
+}
+
+.dark .swal2-input {
+  background-color: #374151 !important;
+  color: #f9fafb !important;
+  border: 1px solid #4b5563 !important;
+}
+
+/* Custom animation */
+.swal2-show {
+  animation: swal2-show 0.3s;
+}
+
+.swal2-hide {
+  animation: swal2-hide 0.15s;
+}
+
+/* Rounded buttons */
+.swal2-styled {
+  border-radius: 0.5rem !important;
+  padding: 0.625rem 1.25rem !important;
+  font-weight: 600 !important;
+}
+
+/* Custom popup styling */
+.swal2-popup {
+  border-radius: 1rem !important;
+  padding: 2rem !important;
 }
