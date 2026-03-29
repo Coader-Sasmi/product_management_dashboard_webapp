@@ -1,274 +1,213 @@
-# 🚀 Product Management Dashboard - Complete Setup Guide
+<div align="center">
 
-## 📦 Prerequisites
-- Node.js (v14 or higher)
-- npm or yarn
-- VS Code (recommended)
+# 📊 Product Management Dashboard
+
+### Full-Stack Ready Admin Dashboard | React · TypeScript · Redux Toolkit · MUI
+
+[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-Visit_Now-4F46E5?style=for-the-badge)](https://product-management-dashboard-webapp.vercel.app/dashboard)
+[![Status](https://img.shields.io/badge/Status-Live_In_Production-brightgreen?style=for-the-badge)]()
+[![Deployed on](https://img.shields.io/badge/Deployed_on-Vercel-000000?style=for-the-badge&logo=vercel)](https://vercel.com)
+
+</div>
 
 ---
 
-## 🛠️ Step-by-Step Installation
+## 📌 Project Overview
 
-### Step 1: Create React App
+A **production-grade Product Management Dashboard** built with React, TypeScript, and Redux Toolkit — designed to give admins full control over product data through a clean, responsive interface.
+
+The dashboard supports complete **CRUD operations** (Create, Read, Update, Delete), advanced **search & filtering**, **data visualisation with charts**, and is fully integrated with a **REST API** via Axios. The UI is built using **Material UI** with consistent theming throughout.
+
+This project demonstrates real-world **dashboard architecture** commonly found in HRMS, CRM, and E-Commerce admin panels.
+
+---
+
+## 🌐 Live Demo
+
+👉 **[https://product-management-dashboard-webapp.vercel.app/dashboard](https://product-management-dashboard-webapp.vercel.app/dashboard)**
+
+---
+
+## ✨ Key Features
+
+### 📋 Product Management (Full CRUD)
+- **Product listing** — paginated table/grid view with all product records
+- **Add Product** — form with validation to create new product entries
+- **Edit Product** — inline or modal-based editing of existing products
+- **Delete Product** — confirmation-based deletion with state sync
+- **Real-time UI updates** — state reflects changes instantly without page reload
+
+### 🔍 Search & Filter
+- **Live search** — filter products by name/keyword in real time
+- **Category/status filters** — narrow down product lists efficiently
+- **Pagination** — handles large datasets without performance degradation
+
+### 📈 Analytics & Charts
+- **Visual data representation** using Recharts / Chart.js
+- **Product stats overview** — total products, categories, stock levels
+- **Trend charts** — visual insights into product data
+
+### 🎨 UI & UX
+- **Material UI (MUI)** components with consistent theming
+- **Responsive design** — works across desktop, tablet, and mobile
+- **Loading states** — skeleton loaders and spinners during API calls
+- **Error handling** — graceful error messages for failed API requests
+- **Form validation** — React Hook Form with field-level error display
+
+---
+
+## 🛠️ Tech Stack
+
+| Category | Technology |
+|----------|-----------|
+| Framework | React.js |
+| Language | TypeScript |
+| State Management | Redux Toolkit |
+| UI Library | Material UI (MUI) |
+| Data Fetching | Axios + REST API |
+| Forms | React Hook Form |
+| Charts | Recharts / Chart.js |
+| Build Tool | Vite / Webpack |
+| Deployment | Vercel |
+| Version Control | Git & GitHub |
+
+---
+
+## 🏗️ Architecture & Key Technical Decisions
+
+### Redux Toolkit for State Management
+All product data is managed via Redux Toolkit slices — ensuring a single source of truth across the dashboard. CRUD operations dispatch actions that update the global store, keeping the UI in sync without prop drilling.
+```typescript
+// Product slice example
+const productSlice = createSlice({
+  name: 'products',
+  initialState,
+  reducers: {
+    addProduct: (state, action) => { ... },
+    updateProduct: (state, action) => { ... },
+    deleteProduct: (state, action) => { ... },
+  }
+});
+```
+
+### Axios for API Integration
+All REST API calls are handled via Axios with a centralised instance — making it easy to add auth headers, interceptors, and error handling globally.
+```typescript
+// Centralised Axios instance
+const apiClient = axios.create({
+  baseURL: process.env.REACT_APP_API_URL,
+  headers: { 'Content-Type': 'application/json' }
+});
+```
+
+### React Hook Form for Validation
+Product add/edit forms use React Hook Form for performant, schema-based validation — minimising unnecessary re-renders during user input.
+```typescript
+const { register, handleSubmit, formState: { errors } } = useForm<ProductFormData>();
+```
+
+### MUI Theming
+Custom MUI theme applied globally ensuring consistent colors, typography, and component styling across the entire dashboard.
+
+---
+
+## 📁 Project Structure
+```
+product-management-dashboard/
+├── src/
+│   ├── app/
+│   │   └── store.ts                  # Redux store configuration
+│   ├── features/
+│   │   └── products/
+│   │       ├── productSlice.ts       # Redux slice (CRUD actions)
+│   │       ├── productAPI.ts         # Axios API calls
+│   │       └── productTypes.ts       # TypeScript interfaces
+│   ├── components/
+│   │   ├── ProductTable.tsx          # Paginated product listing
+│   │   ├── ProductForm.tsx           # Add/Edit form with validation
+│   │   ├── SearchFilter.tsx          # Search & filter controls
+│   │   ├── StatsCards.tsx            # Overview stat cards
+│   │   ├── ProductChart.tsx          # Recharts data visualisation
+│   │   └── DeleteConfirm.tsx         # Delete confirmation modal
+│   ├── pages/
+│   │   └── Dashboard.tsx             # Main dashboard page
+│   ├── hooks/
+│   │   └── useProducts.ts            # Custom hook for product data
+│   ├── theme/
+│   │   └── muiTheme.ts               # MUI custom theme config
+│   └── utils/
+│       └── apiClient.ts              # Centralised Axios instance
+├── public/
+└── README.md
+```
+
+---
+
+## 🚀 Getting Started Locally
 ```bash
-npx create-react-app product-dashboard --template typescript
-cd product-dashboard
-```
+# Clone the repository
+git clone https://github.com/Coader-Sasmi/product-management-dashboard-webapp.git
 
-### Step 2: Install Dependencies
-```bash
-npm install axios react-router-dom lucide-react
-npm install -D @types/react-router-dom tailwindcss postcss autoprefixer
-npx tailwindcss init -p
-```
+# Navigate into the project
+cd product-management-dashboard-webapp
 
-### Step 3: Configure Tailwind CSS
-
-**Update `tailwind.config.js`:**
-```javascript
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-  ],
-  darkMode: 'class',
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-}
-```
-
-**Update `src/index.css`:**
-```css
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-```
-
----
-
-## 📁 Folder Structure
-
-Create this structure in your `src` folder:
-
-```
-src/
-├── components/
-│   ├── Auth/
-│   │   └── Login.tsx
-│   ├── Layout/
-│   │   ├── Layout.tsx
-│   │   ├── Navbar.tsx
-│   │   └── Sidebar.tsx
-│   └── Products/
-│       ├── ProductCard.tsx
-│       ├── ProductForm.tsx
-│       └── ProductList.tsx
-├── context/
-│   ├── AuthContext.tsx
-│   └── ThemeContext.tsx
-├── services/
-│   └── api.ts
-├── types/
-│   └── index.ts
-├── App.tsx
-├── index.tsx
-└── index.css
-```
-
----
-
-## 📝 File Creation Order
-
-### 1. Create Types (`src/types/index.ts`)
-Copy the code from the artifact "types/index.ts"
-
-### 2. Create API Service (`src/services/api.ts`)
-Copy the code from the artifact "services/api.ts"
-
-### 3. Create Theme Context (`src/context/ThemeContext.tsx`)
-Copy the code from the artifact "context/ThemeContext.tsx"
-
-### 4. Create Auth Context (`src/context/AuthContext.tsx`)
-Copy the code from the artifact "context/AuthContext.tsx"
-
-### 5. Create Login Component (`src/components/Auth/Login.tsx`)
-Copy the code from the artifact "components/Auth/Login.tsx"
-
-### 6. Create Navbar Component (`src/components/Layout/Navbar.tsx`)
-Copy the code from the artifact "components/Layout/Navbar.tsx"
-
-### 7. Create Sidebar Component (`src/components/Layout/Sidebar.tsx`)
-Copy the code from the artifact "components/Layout/Sidebar.tsx"
-
-### 8. Create Layout Component (`src/components/Layout/Layout.tsx`)
-Copy the code from the artifact "components/Layout/Layout.tsx"
-
-### 9. Create Product Card (`src/components/Products/ProductCard.tsx`)
-Copy the code from the artifact "components/Products/ProductCard.tsx"
-
-### 10. Create Product Form (`src/components/Products/ProductForm.tsx`)
-Copy the code from the artifact "components/Products/ProductForm.tsx"
-
-### 11. Create Product List (`src/components/Products/ProductList.tsx`)
-Copy the code from the artifact "components/Products/ProductList.tsx"
-
-### 12. Update App.tsx (`src/App.tsx`)
-Copy the code from the artifact "App.tsx"
-
-### 13. Update index.tsx (`src/index.tsx`)
-Copy the code from the artifact "index.tsx"
-
----
-
-## 🚀 Running the Application
-
-```bash
-npm start
-```
-
-The application will open at `http://localhost:3000`
-
----
-
-## ✨ Features Implemented
-
-### 🔐 Authentication
-- Login page with mock authentication
-- Protected routes
-- Logout functionality
-- User profile display
-
-### 🎨 UI/UX
-- Responsive design (mobile, tablet, desktop)
-- Dark/Light theme toggle
-- Sidebar drawer menu
-- Fullscreen mode
-- Professional navbar
-
-### 📦 Product Management
-- ✅ Fetch and display products from API
-- ✅ Add new product (mocked POST request)
-- ✅ Edit product (PUT request)
-- ✅ Delete product (DELETE request)
-- ✅ Search functionality
-- ✅ Filter by category
-- ✅ Card layout with images
-- ✅ Loading states
-
-### 🎯 API Integration
-- Using https://fakestoreapi.com/products
-- Axios for HTTP requests
-- Error handling
-- Async/await patterns
-
----
-
-## 🎨 Theme & Styling
-
-The application uses:
-- **Tailwind CSS** for styling
-- **Dark Mode** support with system preference detection
-- **Lucide React** for icons
-- Responsive grid layouts
-- Smooth transitions and hover effects
-
----
-
-## 📱 Responsive Breakpoints
-
-- Mobile: < 640px
-- Tablet: 640px - 1024px
-- Desktop: > 1024px
-
----
-
-## 🔑 Login Credentials
-
-**Demo Mode:** Use any username and password to login
-- Example: username: `admin`, password: `admin123`
-
----
-
-## 🐛 Troubleshooting
-
-### Issue: Module not found
-```bash
+# Install dependencies
 npm install
+
+# Add environment variables
+cp .env.example .env
+# Add your API base URL in .env
+
+# Run development server
+npm run dev
 ```
 
-### Issue: Tailwind classes not working
-Make sure `tailwind.config.js` and `index.css` are properly configured
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### Issue: Type errors
-```bash
-npm install -D @types/react-router-dom
+---
+
+## ⚙️ Environment Variables
+```env
+REACT_APP_API_URL=your_api_base_url_here
 ```
 
 ---
 
-## 📚 Tech Stack
+## 📊 What This Project Demonstrates
 
-- **React 18** with TypeScript
-- **React Router DOM** for routing
-- **Axios** for API calls
-- **Tailwind CSS** for styling
-- **Lucide React** for icons
-- **Context API** for state management
-
----
-
-## 🎯 Key Components Explained
-
-### AuthContext
-Manages authentication state and provides login/logout functionality
-
-### ThemeContext
-Handles dark/light theme switching and persistence
-
-### ProductList
-Main component that fetches, displays, and manages products
-
-### Layout
-Wrapper component with Navbar and Sidebar
-
-### PrivateRoute
-Protects dashboard routes from unauthenticated access
+| Skill | How It's Shown |
+|-------|---------------|
+| **Redux Toolkit** | Global state for all CRUD operations |
+| **TypeScript** | Typed components, interfaces, API responses |
+| **REST API Integration** | Axios with error handling & loading states |
+| **Component Architecture** | Reusable, single-responsibility components |
+| **Form Handling** | React Hook Form with validation |
+| **Data Visualisation** | Charts for product analytics |
+| **Performance** | Pagination for large datasets, minimal re-renders |
+| **UI Systems** | MUI theming with consistent design language |
 
 ---
 
-## 📖 Usage
+## 💼 About This Project (For Recruiters)
 
-1. **Login**: Use any credentials on the login page
-2. **View Products**: See all products in a card layout
-3. **Search**: Type in the search bar to filter products
-4. **Filter**: Select a category from the dropdown
-5. **Add Product**: Click the "Add Product" button
-6. **Edit Product**: Click the edit icon on any product card
-7. **Delete Product**: Click the delete icon (with confirmation)
-8. **Toggle Theme**: Click the sun/moon icon in the navbar
-9. **Fullscreen**: Click the maximize icon
-10. **Logout**: Click your profile and select logout
+This dashboard was built to demonstrate **real-world admin panel development** — the kind of work I do professionally for HRMS, CRM, and E-Commerce platforms.
+
+Key engineering decisions made:
+- Chose **Redux Toolkit** over Context API for predictable state management across multiple CRUD operations
+- Used **React Hook Form** instead of controlled components to avoid performance issues on large forms
+- Implemented **Axios interceptors** for centralised error handling rather than per-request try/catch
+- Applied **MUI theming** at the root level for consistent UI across all components
+
+This project directly mirrors the type of dashboard work I delivered at **Searching Yard Group** (HRMS, CRM, E-Commerce dashboards) and **Netsqure** (Event Management Platform with 3,000+ users).
 
 ---
 
-## 🎉 Success Checklist
+<div align="center">
 
-- ✅ Login page implemented
-- ✅ Dashboard with drawer sidebar
-- ✅ Navbar with profile
-- ✅ Logout functionality
-- ✅ Fullscreen option
-- ✅ Dark/Light theme
-- ✅ Fetch and display products
-- ✅ Add product (mocked)
-- ✅ Edit product
-- ✅ Delete product
-- ✅ Search functionality
-- ✅ Category filter
-- ✅ Responsive design
-- ✅ TypeScript support
+Built with ❤️ by **Sasmita Mahanta**
 
+[![Portfolio](https://img.shields.io/badge/Portfolio-Visit-6366F1?style=for-the-badge)](https://my-portfolio-website-blond-two.vercel.app/)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0077B5?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/sasmita-mahanta-7b24801a7/)
+[![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?style=for-the-badge&logo=github)](https://github.com/Coader-Sasmi)
 
-**Happy Coding! 🎉**
+</div>
